@@ -1,32 +1,30 @@
-let envelopeCount = 0
+const Pool = require('pg').Pool;
 
-const createEnvelope = queryArguments => {
-    let currentCount;
-    envelopeCount++
-    currentCount = envelopeCount
-    return {
-        id: currentCount,
-        name: queryArguments.name,
-        amount: queryArguments.amount
-    }
+const pool = new Pool({
+    user: 'me',
+    host: 'localhost',
+    database: 'api',
+    password: 'fabio',
+    port: 5432,
+})
+
+const getEnvelopeById = (request, response) => {
+    
+    const id = parseInt(request.params.id)
+    pool.query('SELECT * FROM envelopes WHERE id = $1', [id], (error, results) => {
+        if (error) {
+            response.status(400).json({error: 'Invalid Request. Must be an integer'})
+            throw error
+        }
+        if(results.rows.length === 0){
+            response.status(404).json({error: 'Either invalid or inexisting ID'})
+        } else {
+            response.status(200).json(results.rows)
+        }
+  })
 }
-
-const getEnvelopeById = (idx, arr) => {
-    return arr.find(d => d.id === Number(idx))
-}
-
-const deleteEnvelope = (idx, arr) => {
-    return arr.findIndex(x => {
-        return x.id === Number(idx)
-    })
-}
-
-
-
 
 
 module.exports = {
-    createEnvelope: createEnvelope,
-    getEnvelopeById: getEnvelopeById,
-    deleteEnvelope: deleteEnvelope
+    getEnvelopeById
 }
