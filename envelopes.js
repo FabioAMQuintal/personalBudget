@@ -1,7 +1,13 @@
+const { request } = require('express');
 const express = require('express')
-const usefulMethods = require('./utils')
+const brain = require('./utils/brain')
 
 envelopesRouter = express.Router()
+envelopesRouter.param('id', (req,res,next)=>{
+    req.params.db = ['userfinal','envelopes']
+    next()
+})
+
 
 //get all envelopes
 envelopesRouter.get('/', (req,res) => {
@@ -9,10 +15,10 @@ envelopesRouter.get('/', (req,res) => {
 });
 
 //get envelope by id
-envelopesRouter.get('/envelope/:id', usefulMethods.getEnvelopeById);
+envelopesRouter.get('/envelope/:id', brain.getEnvelopeById);
 
 //create a new envelope
-envelopesRouter.post('/newEnvelope',);
+envelopesRouter.post('/newEnvelope', brain.createEnvelope);
 
 //delete an envelope
 envelopesRouter.delete('/deleteEnvelope/:id', );
