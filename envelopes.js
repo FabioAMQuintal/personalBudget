@@ -1,8 +1,8 @@
-const { request } = require('express');
 const express = require('express')
-const brain = require('./utils/brain')
+const brain = require('./utils/brainEnvelopes')
 
 envelopesRouter = express.Router()
+
 envelopesRouter.param('id', (req,res,next)=>{
     req.params.db = ['userfinal','envelopes']
     next()
@@ -29,9 +29,6 @@ envelopesRouter.patch('increaseEnvelope/:id', );
 
 //retrieve funds from a specific envelope
 envelopesRouter.patch('/decreaseEnvelope/:id', );
-
-//add funds to user's balance
-envelopesRouter.put('/insertBalance', );
 
 module.exports = envelopesRouter
 
