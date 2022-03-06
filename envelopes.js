@@ -10,9 +10,7 @@ envelopesRouter.param('id', (req,res,next)=>{
 
 
 //get all envelopes
-envelopesRouter.get('/', (req,res) => {
-    res.json({info: 'Node.js, Express and Postgres'})
-});
+envelopesRouter.get('/', brain.getAllEnvelopes);
 
 //get envelope by id
 envelopesRouter.get('/envelope/:id', brain.getEnvelopeById);
@@ -21,10 +19,10 @@ envelopesRouter.get('/envelope/:id', brain.getEnvelopeById);
 envelopesRouter.post('/newEnvelope', brain.createEnvelope);
 
 //delete an envelope
-envelopesRouter.delete('/deleteEnvelope/:id', );
+envelopesRouter.delete('/deleteEnvelope/:id', brain.deleteEnvelope);
 
 //transfer value between two envelopes if possible
-envelopesRouter.patch('/transfer/:fromID/to/:id', );
+envelopesRouter.patch('/transfer/:fromid/to/:id', brain.transfer);
 
 //add funds to a specific envelope
 envelopesRouter.patch('increaseEnvelope/:id', );
